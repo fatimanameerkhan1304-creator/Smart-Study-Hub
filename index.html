@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#6757e8">
+  <title>StudySpace — Smart Study Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="StudySpace home">
+        <span class="brand-mark">✦</span><span>Study<span class="brand-light">Space</span></span>
+      </a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="nav-list" aria-label="Main navigation">
+        <button class="nav-item active" data-page="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-item" data-page="tasks"><span>✓</span> My Tasks <b class="nav-count" id="taskNavCount">0</b></button>
+        <button class="nav-item" data-page="notes"><span>▤</span> Notes</button>
+        <button class="nav-item" data-page="flashcards"><span>▣</span> Flashcards</button>
+        <button class="nav-item" data-page="focus"><span>◷</span> Focus Room</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="tip-card"><div class="tip-spark">✧</div><strong>Small steps add up.</strong><p>Every focused minute moves you closer to your goals.</p></div>
+        <div class="profile"><div class="avatar">S</div><div><strong>Student Workspace</strong><small>Free plan</small></div><span class="profile-dots">•••</span></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Toggle menu">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong id="currentSection">Dashboard</strong></div>
+        <div class="top-actions"><span class="today-chip" id="todayLabel"></span><button class="icon-button" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">☾</button><div class="top-avatar">S</div></div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="welcome-row">
+          <div><div class="eyebrow">YOUR PERSONAL LEARNING SPACE</div><h1>Good to see you, <span>scholar!</span> 👋</h1><p class="muted">A little progress each day adds up to big results.</p></div>
+          <button class="primary-button" data-goto="tasks">＋ Add a task</button>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card purple"><div class="stat-icon">✓</div><div class="stat-label">Tasks completed</div><div class="stat-value" id="completedStat">0</div><div class="stat-foot">Keep up the momentum</div><div class="stat-decoration">✓</div></article>
+          <article class="stat-card peach"><div class="stat-icon">◷</div><div class="stat-label">Focus minutes</div><div class="stat-value" id="focusStat">0</div><div class="stat-foot">Time well invested</div><div class="stat-decoration">◷</div></article>
+          <article class="stat-card mint"><div class="stat-icon">▤</div><div class="stat-label">Notes created</div><div class="stat-value" id="notesStat">0</div><div class="stat-foot">Your ideas, organized</div><div class="stat-decoration">✧</div></article>
+          <article class="stat-card blue"><div class="stat-icon">▣</div><div class="stat-label">Flashcards</div><div class="stat-value" id="cardsStat">0</div><div class="stat-foot">Knowledge in progress</div><div class="stat-decoration">▣</div></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel tasks-panel">
+            <div class="panel-heading"><div><h2>Today's priorities</h2><p class="muted">Stay on top of what matters.</p></div><button class="text-button" data-goto="tasks">View all →</button></div>
+            <div id="dashboardTasks" class="task-list"></div>
+          </article>
+          <article class="panel progress-panel">
+            <div class="panel-heading"><div><h2>Daily progress</h2><p class="muted">Your task completion rate.</p></div><span class="mini-badge">Today</span></div>
+            <div class="progress-ring-wrap"><div class="progress-ring" id="progressRing"><div><strong id="progressPercent">0%</strong><small>completed</small></div></div></div>
+            <div class="progress-legend"><span><i class="legend-dot done"></i>Completed</span><span><i class="legend-dot pending"></i>Remaining</span></div>
+            <div class="quote-box">“The secret of getting ahead is getting started.”<small>— Mark Twain</small></div>
+          </article>
+        </div>
+        <div class="quick-grid">
+          <button class="quick-card" data-goto="notes"><span class="quick-icon lavender">✎</span><span><strong>Write a note</strong><small>Capture a new idea</small></span><b>→</b></button>
+          <button class="quick-card" data-goto="flashcards"><span class="quick-icon peach-bg">▣</span><span><strong>Review flashcards</strong><small>Practice what you know</small></span><b>→</b></button>
+          <button class="quick-card" data-goto="focus"><span class="quick-icon mint-bg">◷</span><span><strong>Start a focus session</strong><small>Make time count</small></span><b>→</b></button>
+        </div>
+      </section>
+
+      <section class="page" id="page-tasks">
+        <div class="page-heading"><div><div class="eyebrow">PLAN YOUR DAY</div><h1>My Tasks <span>✓</span></h1><p class="muted">Turn your to-do list into done.</p></div></div>
+        <article class="panel">
+          <form id="taskForm" class="entry-form">
+            <input id="taskInput" type="text" placeholder="What do you need to get done?" maxlength="100" required>
+            <select id="taskPriority" aria-label="Priority"><option value="Medium">Medium</option><option value="High">High</option><option value="Low">Low</option></select>
+            <input id="taskDate" type="date" aria-label="Due date">
+            <button class="primary-button" type="submit">＋ Add task</button>
+          </form>
+          <div class="filter-row"><div class="filter-tabs" id="taskFilters"><button class="filter-tab selected" data-filter="all">All tasks</button><button class="filter-tab" data-filter="active">In progress</button><button class="filter-tab" data-filter="done">Completed</button></div><span class="muted small" id="taskCountLabel"></span></div>
+          <div id="taskList" class="task-list large-list"></div>
+        </article>
+      </section>
+
+      <section class="page" id="page-notes">
+        <div class="page-heading"><div><div class="eyebrow">YOUR SECOND BRAIN</div><h1>My Notes <span>✎</span></h1><p class="muted">Keep important thoughts in one place.</p></div></div>
+        <article class="panel note-composer">
+          <form id="noteForm">
+            <input id="noteTitle" type="text" placeholder="Note title (e.g. Database Systems)" maxlength="80" required>
+            <textarea id="noteBody" rows="4" placeholder="Write your ideas, class notes or reminders here..." required></textarea>
+            <div class="form-footer"><span class="muted small">Your notes are saved in this browser.</span><button class="primary-button" type="submit">Save note ↗</button></div>
+          </form>
+        </article>
+        <div id="notesGrid" class="notes-grid"></div>
+      </section>
+
+      <section class="page" id="page-flashcards">
+        <div class="page-heading"><div><div class="eyebrow">ACTIVE RECALL</div><h1>Flashcards <span>▣</span></h1><p class="muted">A simple way to remember more.</p></div></div>
+        <div class="flash-layout">
+          <article class="panel flash-study">
+            <div class="panel-heading"><div><h2>Study deck</h2><p class="muted" id="cardPosition">No cards yet</p></div><span class="mini-badge">Flip to reveal</span></div>
+            <button class="flashcard" id="flashcard" type="button"><span class="flash-hint">QUESTION</span><strong id="flashQuestion">Create your first flashcard</strong><small id="flashAnswer">Your answer will appear here.</small><span class="flip-hint">Click card to flip ↻</span></button>
+            <div class="flash-controls"><button class="secondary-button" id="prevCard">← Previous</button><button class="primary-button" id="nextCard">Next card →</button></div>
+          </article>
+          <article class="panel">
+            <div class="panel-heading"><div><h2>Create a card</h2><p class="muted">Add a question and answer.</p></div></div>
+            <form id="cardForm" class="stack-form"><label>Question<input id="cardQuestion" required maxlength="180" placeholder="What is an algorithm?"></label><label>Answer<textarea id="cardAnswer" required rows="4" maxlength="500" placeholder="A step-by-step procedure to solve a problem."></textarea></label><button class="primary-button" type="submit">＋ Add flashcard</button></form>
+            <div class="deck-count"><span>Cards in your deck</span><strong id="deckCount">0</strong></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="page" id="page-focus">
+        <div class="page-heading"><div><div class="eyebrow">DEEP WORK STARTS HERE</div><h1>Focus Room <span>◷</span></h1><p class="muted">One task. One session. No distractions.</p></div></div>
+        <div class="focus-layout">
+          <article class="panel timer-panel">
+            <span class="mini-badge">POMODORO TIMER</span><div class="timer-mode" id="timerMode">Focus session</div>
+            <div class="timer-circle"><div><strong id="timerDisplay">25:00</strong><small>minutes:seconds</small></div></div>
+            <div class="timer-presets"><button class="preset active" data-minutes="25">Focus · 25m</button><button class="preset" data-minutes="5">Short break · 5m</button><button class="preset" data-minutes="15">Long break · 15m</button></div>
+            <div class="timer-actions"><button class="primary-button" id="timerStart">▶ Start focus</button><button class="secondary-button" id="timerReset">↺ Reset</button></div>
+            <p class="muted small" id="timerMessage">Ready when you are. You've got this!</p>
+          </article>
+          <article class="panel focus-tips"><div class="panel-heading"><div><h2>Focus checklist</h2><p class="muted">Set yourself up for success.</p></div><span class="quick-icon mint-bg">✧</span></div>
+            <ul class="focus-checks"><li><span>01</span><div><strong>Choose one clear task</strong><small>Know exactly what you want to finish.</small></div></li><li><span>02</span><div><strong>Put distractions away</strong><small>Silence notifications and close extra tabs.</small></div></li><li><span>03</span><div><strong>Take a proper break</strong><small>Stretch, hydrate and rest your eyes.</small></div></li></ul>
+            <div class="focus-total"><span>Focus minutes completed</span><strong id="focusTotal">0 min</strong></div>
+          </article>
+        </div>
+      </section>
+      <footer>Made for curious minds <span>✦</span> StudySpace</footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
